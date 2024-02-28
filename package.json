@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "fix:eslint":"eslint --ext .js, .vue resources/js/ --fix"
+        "fix:eslint": "eslint --ext .js, .vue resources/js/ --fix"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^5.0.4",
@@ -16,6 +16,8 @@
         "vue": "^3.4.19"
     },
     "dependencies": {
-        "@inertiajs/vue3": "^1.0.14"
+        "@inertiajs/inertia-vue3": "^0.6.0",
+        "@inertiajs/vue3": "^1.0.14",
+        "ziggy-js": "github:tightenco/ziggy"
     }
 }
