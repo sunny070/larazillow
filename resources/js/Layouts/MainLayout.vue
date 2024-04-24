@@ -13,16 +13,33 @@
                 <div class="text-xl font-bold text-center text-indigo-600">
                     <Link :href="route('listing.index')">LaraZillow</Link>
                 </div>
-                <div>
-                    <Link :href="route('listing.create')"
-                        class="btn-primary">+ New Listing
-                    </Link>
+                <div v-if="user" class="flex items-center gap-4">
+                    <div class="text-sm text-gray-500">{{ user.name }}</div>
+                    <Link :href="route('listing.create')" class="btn-primary"
+                        >+ New Listing</Link
+                    >
+                    <!-- <div>Logout</div> -->
+                    <div>
+                        <Link
+                            :href="route('logout')"
+                            method="delete"
+                            as="button"
+                            >Logout</Link
+                        >
+                    </div>
+                </div>
+                <div v-else class="flex items-center gap-4">
+                    <Link :href="route('user-account.create')">Register</Link>
+                    <Link :href="route('login')">Sign-In</Link>
                 </div>
             </nav>
         </div>
     </header>
     <main class="container w-full p-4 mx-auto">
-        <div v-if="flashSuccess" class="p-2 mb-4 border border-green-200 rounded-md shadow-sm bg-green-50">
+        <div
+            v-if="flashSuccess"
+            class="p-2 mb-4 border border-green-200 rounded-md shadow-sm bg-green-50"
+        >
             {{ flashSuccess }}
         </div>
 
@@ -33,15 +50,10 @@
 <script setup>
 import { ref } from "vue";
 import { computed } from "vue";
-import { Link, usePage } from "@inertiajs/inertia-vue3"
+import { Link, usePage } from "@inertiajs/inertia-vue3";
 
+const page = usePage();
 
-
-const page = usePage()
-const flashSuccess = computed(
-    () => page.props.value.flash.success
-)
-
+const flashSuccess = computed(() => page.props.value.flash.success);
+const user = computed(() => page.props.value.user);
 </script>
-
-
