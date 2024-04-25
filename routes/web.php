@@ -18,11 +18,11 @@ use App\Http\Controllers\UserAccountController;
 */
 
 
-Route::get('/',[IndexController::class,'index']);
-Route::get('/hello',[IndexController::class,'show'])->middleware('auth');
+Route::get('/', [IndexController::class, 'index']);
+Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
 
-Route::resource('listing', ListingController::class)->only(['create','store','update','edit','destroy'])->middleware('auth');
-Route::resource('listing', ListingController::class)->except(['create','store','update','edit','destroy']);
+Route::resource('listing', ListingController::class)->only(['create', 'store', 'update', 'edit', 'destroy'])->middleware('auth');
+Route::resource('listing', ListingController::class)->except(['create', 'store', 'update', 'edit', 'destroy']);
 // Route::resource('listing', ListingController::class)
 // ->only(['index','show','create','store']);
 
@@ -35,5 +35,5 @@ Route::delete('logout', [AuthController::class, 'destroy'])
   ->name('logout');
 
 
-Route::resource('user-account',UserAccountController::class)
-->only(['create','store']);
+Route::resource('user-account', UserAccountController::class)
+  ->only(['create', 'store']);
