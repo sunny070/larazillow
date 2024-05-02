@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Listing::class,'listing');
-    }
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Listing::class,'listing');
+    // }
     /**
      * Display a listing of the resource.
      */
