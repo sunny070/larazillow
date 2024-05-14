@@ -26,22 +26,31 @@ namespace App\Models{
  * @property string $street
  * @property string $street_nr
  * @property int $price
- * @property-read \App\Models\User|null $owner
+ * @property int $by_user_id
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\User $owner
  * @method static \Database\Factories\ListingFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Listing filter(array $filters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Listing mostRecent()
  * @method static \Illuminate\Database\Eloquent\Builder|Listing newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Listing newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Listing onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Listing query()
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereArea($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereBaths($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereBeds($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Listing whereByUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereCity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Listing whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereStreet($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereStreetNr($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Listing whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Listing withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Listing withoutTrashed()
  */
 	class Listing extends \Eloquent {}
 }
@@ -58,8 +67,9 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Listing> $listing
- * @property-read int|null $listing_count
+ * @property int $is_admin
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Listing> $listings
+ * @property-read int|null $listings_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
@@ -72,6 +82,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)

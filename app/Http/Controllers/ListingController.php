@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->authorizeResource(Listing::class,'listing');
-    // }
+    public function __construct()
+    {
+        $this->authorizeResource(Listing::class,'listing');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,26 +20,26 @@ class ListingController extends Controller
         $filters = $request->only([
             'priceFrom', 'priceTo', 'beds', 'baths', 'areaFrom', 'areaTo'
         ]);
-        $query = Listing::orderByDesc('created_at');
+        
 
-        if($filters['priceFrom'] ??false){
-            $query->where('price','>=',$filters['priceFrom']);
-        }
-        if($filters['priceTo']??false){
-            $query->where('price','<=',$filters['priceTo']);
-        }
-        if($filters['beds']??false){
-            $query->where('beds',$filters['beds']);
-        }
-        if($filters['baths']??false){
-            $query->where('baths',$filters['baths']);
-        }
-        if($filters['areaFrom']??false){
-            $query->where('area','<=',$filters['areaFrom']);
-        }
-        if($filters['areaTo']??false){
-            $query->where('area','<=',$filters['areaTo']);
-        }
+        // if($filters['priceFrom'] ??false){
+        //     $query->where('price','>=',$filters['priceFrom']);
+        // }
+        // if($filters['priceTo']??false){
+        //     $query->where('price','<=',$filters['priceTo']);
+        // }
+        // if($filters['beds']??false){
+        //     $query->where('beds',$filters['beds']);
+        // }
+        // if($filters['baths']??false){
+        //     $query->where('baths',$filters['baths']);
+        // }
+        // if($filters['areaFrom']??false){
+        //     $query->where('area','<=',$filters['areaFrom']);
+        // }
+        // if($filters['areaTo']??false){
+        //     $query->where('area','<=',$filters['areaTo']);
+        // }
 
 
         return inertia(
@@ -47,7 +47,9 @@ class ListingController extends Controller
             'Listing/Index',
             [
                 'filters' => $filters,
-                'listings' => $query->paginate(10)
+                'listings' =>Listing::mostRecent()
+                    ->filter($filters)
+                    ->paginate(10)
                     ->withQueryString()
             ]
         );
@@ -147,9 +149,5 @@ class ListingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Listing $listing)
-    {
-        $listing->delete();
-        return redirect()->back()->with('success', 'Listing was deleted!');
-    }
+    
 }
