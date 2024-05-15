@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 // use PHPUnit\TextUI\CliArguments\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Listing extends Model
 {
     use HasFactory,SoftDeletes;
     protected $fillable = ['beds','baths','area','city','code','street','street_nr','price'];
+    protected $sortable=[
+        'price','created_at'
+    ];
 
     public function owner():BelongsTo
     {
@@ -21,6 +25,15 @@ class Listing extends Model
             'by_user_id'
         );
     }
+    public function images(): HasMany
+    {
+        return $this->hasMany(ListingImage::class);
+    }
+
+
+
+
+    // Scope method
     public function scopeMostRecent(Builder $query):Builder
     {
         return $query->orderByDesc('created_at');
@@ -50,7 +63,10 @@ class Listing extends Model
             fn($query,$value)=>$query->withTrashed()
         )->when(
             $filters['by']??false,
-            fn($query,$value)=>$query->orderBy($value,$filters['order']??'desc')
+            fn($query,$value)=>
+            !in_array($value,$this->sortable)
+                ? $query :
+            $query->orderBy($value,$filters['order']??'desc')
         );
     }
 }

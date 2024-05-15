@@ -22,8 +22,8 @@ use App\Http\Controllers\UserAccountController;
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
 
-Route::resource('listing', ListingController::class)->only(['create', 'store', 'update', 'edit'])->middleware('auth');
-Route::resource('listing', ListingController::class)->except(['create', 'store', 'update', 'edit', 'destroy']);
+// Route::resource('listing', ListingController::class)->only(['create', 'store', ])->middleware('auth');
+Route::resource('listing', ListingController::class)->only(['index','show']);
 // Route::resource('listing', ListingController::class)
 // ->only(['index','show','create','store']);
 
@@ -45,6 +45,10 @@ Route::prefix('realtor')
 ->middleware('auth')
 ->group(function()
 {
-  Route::resource('listing',RealtorListingController::class)->only(['index','destroy']);
-}
-);
+  Route::name('listing.restore')
+  ->put('listing/{listing}/restor',[RealtorListingController::class,'restore'])
+  ->withTrashed();
+  Route::resource('listing',RealtorListingController::class)
+  ->only(['index','update', 'edit','destroy','create','store'])
+  ->withTrashed();
+});
