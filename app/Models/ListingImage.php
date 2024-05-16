@@ -9,10 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ListingImage extends Model
 {
     use HasFactory;
-    protected $fillable = ['filename'];
+    protected $fillable = ['filename','listing_id'];
+    protected $appends = ['src'];
 
     public function listing():BelongsTo
     {
         return $this->belongsTo(Listing::class);
+    }
+
+    // get Real Src Attribute -> real_src
+    public function getSrcAttribute(){
+        return asset("storage/{$this->filename}");
     }
 }
