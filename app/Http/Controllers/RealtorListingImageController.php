@@ -21,6 +21,12 @@ class RealtorListingImageController extends Controller
     {
         // dd($request);
         if($request->hasFile('images')){
+            $request->validate([
+                'images.*' => 'mimes:jpg,png,jpeg|max:5000'
+            ],[
+                'images.*' => 'The file should be in one of the format: jpeg,png,jpg'
+            ]);
+            
             foreach ($request->file('images') as $file){
                 $path = $file->store('images','public');
 

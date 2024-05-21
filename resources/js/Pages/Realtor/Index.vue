@@ -32,7 +32,10 @@
                         method="put">Restore</Link>
                     </div>
                     <div class="mt-2">
-                        <Link :href="route('realtor.listing.image.create',{listing:listing.id})" class="block w-fill btn-outline text-xs font-medium text-center">Image</Link>
+                        <Link 
+                        :href="route('realtor.listing.image.create',{listing:listing.id})" 
+                        class="block text-xs font-medium text-center w-fill btn-outline">
+                        Image ({{ listing.images_count }})</Link>
                     </div>
                     </section>
             </div>
