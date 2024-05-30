@@ -55,6 +55,14 @@
                 </div>
                 
             </Box>
+
+            <MakeOffer 
+            v-if="user && !offerMade"
+            @offer-updated="offer = $event"
+            :listing-id="listing.id" 
+            :price="listing.price"/>
+
+            <OfferMade v-if="user && offerMade" :offer="offerMade"/>
         </div>
     </div>
 </template>
@@ -64,17 +72,27 @@ import Price from '@/Components/Price.vue';
 import ListingAddress from '../../Components/ListingAddress.vue';
 import ListingSpace from '@/Components/ListingSpace.vue';
 import Box from '@/Components/UI/Box.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useMonthlyPayments } from '@/Composables/useMonthlyPayments';
+import MakeOffer from '@/Pages/Listing/Show/Components/MakeOffer.vue';
+import OfferMade from '@/Pages/Listing/Show/Components/OfferMade.vue';
+import { usePage } from '@inertiajs/inertia-vue3';
 
 
 
 const interestRate = ref(2.5)
 const duration = ref(25)
 const props = defineProps({
-    listing: Object
+    listing: Object,
+    offerMade : Object,
 })
 
+const offer = ref(props.listing.price)
 
-const {monthlyPayment,totalPaid,totalInterest} =useMonthlyPayments(props.listing.price,interestRate,duration)
+const {monthlyPayment,totalPaid,totalInterest} =useMonthlyPayments(offer,interestRate,duration)
+
+const page = usePage();
+
+const flashSuccess = computed(() => page.props.value.flash.success);
+const user = computed(() => page.props.value.user);
 </script> 

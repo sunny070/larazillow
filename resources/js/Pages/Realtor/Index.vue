@@ -3,6 +3,8 @@
     <section class="mb-4">
         <RealtorFilters :filters="filters"/>
     </section>
+
+   
     <section class="grid grid-cols-1 gap-2 md:grid-cols-2"> 
         <Box v-for="listing in listings.data" :key="listing.id" :class="{'border-dashed':listing.deleted_at}">
             <div class="flex flex-col justify-between gap-2 md:flex-row md:items-center">
@@ -36,6 +38,12 @@
                         :href="route('realtor.listing.image.create',{listing:listing.id})" 
                         class="block text-xs font-medium text-center w-fill btn-outline">
                         Image ({{ listing.images_count }})</Link>
+                    </div>
+                    <div class="mt-2">
+                        <Link 
+                        :href="route('realtor.listing.show',{listing:listing.id})" 
+                        class="block text-xs font-medium text-center w-fill btn-outline">
+                        Offers ({{ listing.offers_count }})</Link>
                     </div>
                     </section>
             </div>

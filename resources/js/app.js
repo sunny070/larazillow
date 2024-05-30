@@ -5,6 +5,16 @@ import { ZiggyVue } from 'ziggy-js'
 import '../css/app.css'
 import { InertiaProgress } from '@inertiajs/progress'
 
+import { Quasar } from "quasar";
+
+// Import icon libraries
+import "@quasar/extras/roboto-font/roboto-font.css";
+import "@quasar/extras/material-icons/material-icons.css";
+
+// Import Quasar css
+import "quasar/src/css/index.sass";
+
+
 InertiaProgress.init({
   delay: 0,
   color: '#29d',
@@ -23,7 +33,11 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
+              
       .use(ZiggyVue)
+      .use(Quasar, {
+        plugins: {},
+        })
       .mount(el)
   },
 })
