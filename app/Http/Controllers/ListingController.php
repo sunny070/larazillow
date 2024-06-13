@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use App\Policies\ListingPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,6 +11,7 @@ class ListingController extends Controller
 {
     public function __construct()
     {
+        // ListingPolicy
         $this->authorizeResource(Listing::class,'listing');
     }
     /**

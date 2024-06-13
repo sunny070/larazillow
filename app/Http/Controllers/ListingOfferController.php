@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use App\Models\Offer;
+use App\Policies\ListingPolicy;
 use Illuminate\Http\Request;
 
 class ListingOfferController extends Controller
 {
     public function store(Listing $listing,Request $request)
     {
+        // ListingPolicy
+        $this->authorize('view',$listing);
         $listing->offers()->save(
             Offer::make(
                 $request->validate([
