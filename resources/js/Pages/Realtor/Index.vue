@@ -5,10 +5,12 @@
     </section>
 
    
-    <section class="grid grid-cols-1 gap-2 md:grid-cols-2"> 
+    <section v-if="listings.data.length" class="grid grid-cols-1 gap-2 md:grid-cols-2"> 
         <Box v-for="listing in listings.data" :key="listing.id" :class="{'border-dashed':listing.deleted_at}">
             <div class="flex flex-col justify-between gap-2 md:flex-row md:items-center">
                 <div :class="{'opacity-25':listing.deleted_at}">
+                <div v-if="listing.sold_at != null"
+                 class="text-xs font-bold uppercase border border-dashed p-1 border-green-500 text-green-500 dark:border-green-600 dark:text-green-600 inline-block rounded-md mb-2">sold</div>
                     
                     <div class="items-center gap-2 xl:flex">
                         <Price :price="listing.price" class="text-2xl font-medium"/>
@@ -49,6 +51,7 @@
             </div>
         </Box>
     </section>
+    <EmptyState v-else> No listing yet</EmptyState>
     <sction v-if="listings.data.length" class="flex w-full mb-4 justify-centermt-4">
         <Pagination :links="listings.links"/>
     </sction>
@@ -63,6 +66,7 @@ import Pagination from '@/Components/UI/Pagination.vue'
 import RealtorFilters from '@/Pages/Realtor/Index/Components/RealtorFilters.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 import { route } from 'ziggy-js';
+import EmptyState from "@/Components/UI/EmptyState.vue";
 defineProps({
     listings:Object,
     filters:Object
