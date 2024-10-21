@@ -51,7 +51,7 @@
             </div>
         </Box>
     </section>
-    <EmptyState v-else> No listing yet</EmptyState>
+    <EmptyState v-else> No listing yet </EmptyState>
     <sction v-if="listings.data.length" class="flex w-full mb-4 justify-centermt-4">
         <Pagination :links="listings.links"/>
     </sction>
